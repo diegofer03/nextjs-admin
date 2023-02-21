@@ -1,3 +1,4 @@
+import { Chart } from '@common/chart'
 import Loading from '@common/Loading'
 import ListingPage from '@components/ListingPage'
 import useFetch from '@hooks/useFetch'
@@ -52,8 +53,26 @@ export default function Dashboard() {
     }
   }
 
+  const categoryNames = products?.map((product: any) => product.category)
+  const categoryCount = categoryNames?.map((cate: any) => cate.name)
+
+  const countOccurrences = (array: Array<string>) =>
+    array?.reduce((prev: any, curr: any) => ((prev[curr] = ++prev[curr] || 1), prev), {})
+
+  const data = {
+    datasets: [
+      {
+        label: 'Categories',
+        data: countOccurrences(categoryCount),
+        borderWidth: 2,
+        backgroundColor: ['#d32244', '#c0c0c0', '#50AF95', '#f3ba2f', '#2a71d0']
+      }
+    ]
+  }
+
   return (
     <>
+      <Chart chartData={data} className="mb-8 mt-2" />
       <div className="flex flex-col" style={styles.container}>
         <ListingPage listInnerRef={listInnerRef} products={products} onScroll={onScroll} />
         {loading ? <Loading /> : null}

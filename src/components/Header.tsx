@@ -6,7 +6,7 @@ import { useAuth } from '@hooks/useAuth'
 // import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outlin
 
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
+  { name: 'Dashboard', href: '/dashboard', current: true },
   { name: 'Productos', href: '/dashboard/products/', current: false },
   { name: 'Ventas', href: '#', current: false }
 ]
