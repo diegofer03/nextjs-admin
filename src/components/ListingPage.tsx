@@ -1,4 +1,7 @@
-export default function ListingPage({ onScroll, listInnerRef, products }: any) {
+import { XCircleIcon } from '@heroicons/react/24/outline'
+import Link from 'next/link'
+
+export default function ListingPage({ onScroll, listInnerRef, products, handleDelete }: any) {
   return (
     <div ref={listInnerRef} className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8" onScroll={onScroll}>
       <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -61,14 +64,21 @@ export default function ListingPage({ onScroll, listInnerRef, products }: any) {
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-500">{product.description}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <a className="text-indigo-600 hover:text-indigo-900" href="/login">
+                    <Link
+                      className="text-indigo-600 hover:text-indigo-900"
+                      href={`/dashboard/edit/${product.id}`}
+                    >
                       Edit
-                    </a>
+                    </Link>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <a className="text-indigo-600 hover:text-indigo-900" href="/login">
-                      Delete
-                    </a>
+                    <XCircleIcon
+                      aria-hidden="true"
+                      className="-ml-1 mr-2 h-5 w-5"
+                      onClick={() => {
+                        handleDelete(product.id)
+                      }}
+                    />
                   </td>
                 </tr>
               ))}

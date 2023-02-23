@@ -1,16 +1,15 @@
-
 import { LockClosedIcon } from '@heroicons/react/24/outline'
 import { useAuth } from '@hooks/useAuth'
 import React, { useRef, useState } from 'react'
 import { useRouter } from 'next/router'
-import Loading from '@common/Loading'
+// import Loading from '@common/Loading'
 
 export default function LoginPage() {
   const emailRef = useRef<HTMLInputElement>(null)
   const passRef = useRef<HTMLInputElement>(null)
   const auth = useAuth()
   const router = useRouter()
-  const [loading, setLoading] = useState<boolean>(false)
+  // const [loading, setLoading] = useState<boolean>(false)
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
@@ -123,7 +122,6 @@ export default function LoginPage() {
                 <span className="font-medium">Login Failed!</span> {auth.error}
               </div>
             ) : null}
-            {loading ? <Loading /> : null}
           </form>
         </div>
       </div>

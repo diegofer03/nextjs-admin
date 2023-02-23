@@ -3,10 +3,11 @@ const VERSION = process.env.NEXT_PUBLIC_API_VERSION
 
 const endPoints = {
   products: {
-    getProducts: (limit: number, offset: number) => `${API}/api/${VERSION}/products?limit=${limit}&offset=${offset}`,
+    getProducts: (limit: number, offset: number) =>
+      `${API}/api/${VERSION}/products?limit=${limit}&offset=${offset}`,
     postProducts: `${API}/api/${VERSION}/products/`,
-    getProduct: (id: number) => `${API}/api/${VERSION}/products/${id}`,
-    putProducts: (id: number) => `${API}/api/${VERSION}/products/${id}`,
+    getProduct: (id: string) => `${API}/api/${VERSION}/products/${id}`,
+    putProducts: (id: string) => `${API}/api/${VERSION}/products/${id}`,
     deleteProducts: (id: number) => `${API}/api/${VERSION}/products/${id}`
   },
   users: {

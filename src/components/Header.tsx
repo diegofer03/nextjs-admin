@@ -1,15 +1,11 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MegaphoneIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useAuth } from '@hooks/useAuth'
+import { useRouter } from 'next/router'
 // import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outlin
 
-const navigation = [
-  { name: 'Dashboard', href: '/dashboard', current: true },
-  { name: 'Productos', href: '/dashboard/products/', current: false },
-  { name: 'Ventas', href: '#', current: false }
-]
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
   { name: 'Settings', href: '#' },
@@ -20,7 +16,28 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
+interface Nav {
+  name: string
+  href: string
+  current: boolean
+}
+
 export default function Header() {
+  const router = useRouter()
+  const route = router.pathname.substring(1)
+
+  const navigation = [
+    { name: 'Dashboard', href: '/dashboard', current: false },
+    { name: 'Productos', href: '/dashboard/products', current: false },
+    { name: 'Ventas', href: '#', current: false }
+  ]
+
+  useEffect(() => {
+    navigation.map((nav: Nav) => {
+      if (nav.href === `/${route}`) nav.current = true
+    })
+  }, [route])
+
   const auth = useAuth()
   const userData = {
     name: auth?.user?.name,
@@ -90,21 +107,14 @@ export default function Header() {
                         leaveTo="transform opacity-0 scale-95"
                       >
                         <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                          {userNavigation.map(item => (
-                            <Menu.Item key={item.name}>
-                              {({ active }) => (
-                                <a
-                                  className={classNames(
-                                    active ? 'bg-gray-100' : '',
-                                    'block px-4 py-2 text-sm text-gray-700'
-                                  )}
-                                  href={item.href}
-                                >
-                                  {item.name}
-                                </a>
-                              )}
-                            </Menu.Item>
-                          ))}
+                          <Menu.Item>
+                            <button
+                              className="block px-4 py-2 text-sm text-gray-700"
+                              onClick={() => auth.logout()}
+                            >
+                              logout
+                            </button>
+                          </Menu.Item>
                         </Menu.Items>
                       </Transition>
                     </Menu>
